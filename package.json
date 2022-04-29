@@ -1,0 +1,14 @@
+{
+  "name": "markdown-colaborated",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private":true,
+  "workspaces":{
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "repository": "git@github.com:felipebaloneker/markdown-colaborated.git",
+  "author": "felipebaloneker <felipebaloneker23@gmail.com>",
+  "license": "MIT"
+}

@@ -12,7 +12,7 @@ function App() {
         <AuthContextProvider>
           <Routes>
             <Route path="/" element={<Login/>}/>
-            <Route path="/markdown" element={<Home/>}/>
+            <Route path="/markdown/:id" element={<Home/>}/>
           </Routes>
         </AuthContextProvider>
       </BrowserRouter>

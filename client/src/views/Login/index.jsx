@@ -10,23 +10,21 @@ function Login(){
     const navigate = useNavigate()
     const {user,setUser} = useAuth()
 
-    if(user){
-      navigate(`/markdown`)
-    }
-
     const loginInDocument=(e)=>{
       e.preventDefault()
       setUser(name)
-      // const socket = io.connect('http://localhost:4000');
-      // socket.emit('add_user',{
-      //   name,
-      //  })
+      const socket = io.connect('http://localhost:4000');
+      socket.emit('select_room',{
+        name,
+        room
+       })
 
-      navigate(`/markdown`)
+      navigate(`/markdown/${room}`)
     }
     const createDocument=(e)=>{
       e.preventDefault()
       setUser(name)
+
       navigate(`/markdown`)
     }
 
@@ -43,7 +41,9 @@ function Login(){
                 required
                 onChange={(e) => setName(e.target.value)}
                 />
-                <button>Criar um Documento</button>
+                <button
+                onClick={createDocument}
+                >Criar um Documento</button>
             </form>
           </div>
           <div className="container">

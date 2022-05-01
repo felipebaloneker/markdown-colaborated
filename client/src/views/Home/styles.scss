@@ -2,4 +2,42 @@
     width:100%;
     height:100vh;
     background-color: var(--background-color);
+    display: grid;
+    grid-template-rows: 3rem 1fr;
+    .header{
+        background-color: var(--header-color);
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        align-items: center;
+        font-weight: 700;
+        color:var(--light-color);
+        .code{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            span{
+                padding:.5rem;
+                border:.1rem solid var(--light-color);
+                border-radius: .5rem;
+                margin:.2rem;
+            }
+        }
+    }
+}
+.editor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.editor_container{
+    width: 80%;
+    height:95%;
+    background-color: var(--light-color);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    border-radius: .5rem;
+    .text-area{
+       border-right: .1rem solid var(--header-color);
+    }
 }

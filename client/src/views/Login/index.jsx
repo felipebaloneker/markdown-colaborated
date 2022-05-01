@@ -12,7 +12,10 @@ function Login(){
 
     const loginInDocument=(e)=>{
       e.preventDefault()
-      setUser(name)
+      localStorage.setItem('name', name)
+      setUser({
+        name:localStorage.getItem('name')
+      })
       const socket = io.connect('http://localhost:4000');
       socket.emit('select_room',{
         name,
@@ -23,7 +26,9 @@ function Login(){
     }
     const createDocument=(e)=>{
       e.preventDefault()
-      setUser(name)
+      setUser({
+        name:localStorage.getItem('name')
+      })
 
       navigate(`/markdown`)
     }
@@ -56,8 +61,8 @@ function Login(){
                 required
                 onChange={(e) => setName(e.target.value)}
                 />
-                <label>Digite o id do Documento</label>
-                <input type='text' name='documento' placeholder='id do documento'
+                <label>Digite o Código do Documento</label>
+                <input type='text' name='documento' placeholder='Código do documento'
                 onChange={(e) => setRoom(e.target.value)}
                 />
               <button

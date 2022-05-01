@@ -1,14 +1,15 @@
-import { useEffect,useState } from "react"
+import { useEffect,useState,useRef } from "react"
 import io from 'socket.io-client';
 
 export function useView(){
-    const [view,setView] = useState([])
+    const [users,setUsers] = useState('')
+    
     useEffect(()=>{
         const socket = io.connect('http://localhost:4000');
-        socket.on('select_room',(data)=>{
-            return data
+        socket.on('select_room',(data) =>{
+           setUsers(`${data.length}`)
         })
-        return setView(socket)
-    })
-    return {view}
+        return () => socket.disconnect()
+    },[])
+    return {users}
 }

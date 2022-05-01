@@ -1,44 +1,38 @@
-import io from 'socket.io-client';
 import {useState } from 'react';
 import {useNavigate} from 'react-router-dom'
-import {useAuth} from '../../hook/useAuth';
 import './styles.scss'
+import api from '../../services/api';
+import {useAuth} from '../../hook/useAuth';
 
 function Login(){
     const [name,setName] = useState('')
     const [room,setRoom] = useState('')
     const navigate = useNavigate()
-    const {user,setUser} = useAuth()
+    const {setUser} = useAuth()
 
     const loginInDocument=(e)=>{
       e.preventDefault()
+      api.loginInDocument(name,room)
+      api.logout()
       localStorage.setItem('name', name)
+      localStorage.setItem('room', room)
       setUser({
-        name:localStorage.getItem('name')
+        name:localStorage.getItem('name'),
+        room:localStorage.getItem('room')
       })
-      const socket = io.connect('http://localhost:4000');
-      socket.emit('select_room',{
-        name,
-        room
-       })
-
       navigate(`/markdown/${room}`)
     }
+
     const createDocument=(e)=>{
       e.preventDefault()
+      api.createDocument(name)
+      api.logout()
+      localStorage.setItem('name', name)
+      localStorage.setItem('room', room)
       setUser({
-        name:localStorage.getItem('name')
+        name:localStorage.getItem('name'),
+        room:localStorage.getItem('room')
       })
-      const socket = io.connect('http://localhost:4000');
-
-      socket.emit('create_room',{
-        body:'',
-       })
-       socket.emit('select_room',{
-        name,
-        room:'1234'
-       })
-
       navigate(`/markdown/1234`)
     }
 

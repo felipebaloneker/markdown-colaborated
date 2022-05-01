@@ -1,17 +1,20 @@
 import { useParams } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {useAuth} from '../../hook/useAuth'
 import ReactMarkdown from 'react-markdown';
 import './styles.scss'
 import { useView } from '../../hook/useView';
+import io from 'socket.io-client';
 
 function Home(){
-    const {user} = useAuth()
     const params = useParams();
-    const [text,setText]= useState('')
-    const {view} = useView()
     const code = params.id
-    console.log(view)
+    const {user} = useAuth()
+    const [text,setText]= useState('')
+    const {users} = useView()
+    const socketRef = useRef()
+
+    console.log("view:"+users)
     return(
        <div className="page">
            <div className="header">
@@ -20,7 +23,7 @@ function Home(){
                </div>
                <div>
                    <p>View</p>
-                    <span>3</span>
+                    <span>{users}</span>
                </div>
                <div className="code">
                    <p>Código:</p>

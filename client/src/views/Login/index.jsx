@@ -1,17 +1,20 @@
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 import {useState } from 'react';
 import {useNavigate} from 'react-router-dom'
 import {useAuth} from '../../hook/useAuth';
+import './styles.scss'
 
 function Login(){
     const [name,setName] = useState('')
+    const [room,setRoom] = useState('')
     const navigate = useNavigate()
     const {user,setUser} = useAuth()
+
     if(user){
       navigate(`/markdown`)
     }
-    const onSubmit=(e)=>{
 
+    const loginInDocument=(e)=>{
       e.preventDefault()
       setUser(name)
       // const socket = io.connect('http://localhost:4000');
@@ -21,17 +24,47 @@ function Login(){
 
       navigate(`/markdown`)
     }
+    const createDocument=(e)=>{
+      e.preventDefault()
+      setUser(name)
+      navigate(`/markdown`)
+    }
+
     return (
-      <div className="App">
+      <div className="login">
         <div className='render'>
-          <form onSubmit={onSubmit}>
-              <label>Digite seu Nome:</label>
-              <input type='text' name='nome' placeholder='nome'
-              required
-              onChange={(e) => setName(e.target.value)}
-              />
-              <button>Entrar</button>
-          </form>
+          <div className='container'>
+            <div className="title">
+              <h2>MarkDown</h2>
+            </div>
+            <form className="container_wrp" onSubmit={createDocument}>
+                <label>Digite seu Nome:</label>
+                <input type='text' name='nome' placeholder='nome'
+                required
+                onChange={(e) => setName(e.target.value)}
+                />
+                <button>Criar um Documento</button>
+            </form>
+          </div>
+          <div className="container">
+            <div className="subtitle">
+                <h2>Colaborativo</h2>
+            </div>
+            <form className="container_wrp last" onSubmit={createDocument}>
+                <label>Digite seu Nome:</label>
+                <input type='text' name='nome' placeholder='nome'
+                required
+                onChange={(e) => setName(e.target.value)}
+                />
+                <label>Digite o id do Documento</label>
+                <input type='text' name='documento' placeholder='id do documento'
+                onChange={(e) => setRoom(e.target.value)}
+                />
+              <button
+              onClick={loginInDocument}
+              >Entrar em um Documento</button>
+            </form>
+          </div>
         </div>
       </div>
     );

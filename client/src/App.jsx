@@ -2,6 +2,7 @@ import Login from './views/Login'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './views/Home'
 import { AuthContextProvider } from './context/AuthContext'
+import './App.scss'
 
 function App() {
   return(

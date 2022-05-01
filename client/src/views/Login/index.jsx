@@ -29,8 +29,17 @@ function Login(){
       setUser({
         name:localStorage.getItem('name')
       })
+      const socket = io.connect('http://localhost:4000');
 
-      navigate(`/markdown`)
+      socket.emit('create_room',{
+        body:'',
+       })
+       socket.emit('select_room',{
+        name,
+        room:'1234'
+       })
+
+      navigate(`/markdown/1234`)
     }
 
     return (

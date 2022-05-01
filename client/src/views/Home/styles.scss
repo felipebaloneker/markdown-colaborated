@@ -31,13 +31,31 @@
     align-items: center;
 }
 .editor_container{
-    width: 80%;
-    height:95%;
+    width: 90%;
+    height:90%;
     background-color: var(--light-color);
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     border-radius: .5rem;
+    overflow: hidden;
     .text-area{
        border-right: .1rem solid var(--header-color);
+       display: grid;
+       grid-template-rows: 3rem 1fr;
+       .toolbar{
+           width:100%;
+           background-color: var(--header-color);
+       }
+       .text{
+           width: 100%;
+           height: 100%;
+           textarea{
+               width: 100%;
+               height:100%;
+               resize: none;
+               outline: none;
+                border:none ;
+           }
+       }
     }
 }

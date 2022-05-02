@@ -12,8 +12,7 @@ function Home(){
     const {user} = useAuth()
     const [text,setText]= useState('')
     const {users} = useView()
-    const socketRef = useRef()
-
+    console.log(users)
     console.log("view:"+users)
     return(
        <div className="page">
@@ -21,9 +20,8 @@ function Home(){
                <div className='username'>
                     <p>Olá, {user.name}</p>
                </div>
-               <div>
-                   <p>View</p>
-                    <span>{users}</span>
+               <div className='room_view'>
+                    <span>View: {users}</span>
                </div>
                <div className="code">
                    <p>Código:</p>

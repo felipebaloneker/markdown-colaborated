@@ -6,6 +6,10 @@ export function useView(){
     
     useEffect(()=>{
         const socket = io.connect('http://localhost:4000');
+        socket.emit('select_room',{
+            name:localStorage.getItem('name'),
+            room:localStorage.getItem('room')
+        })
         socket.on('select_room',(data) =>{
            setUsers(`${data.length}`)
         })

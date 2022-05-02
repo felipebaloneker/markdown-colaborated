@@ -1,3 +1,6 @@
-import { createConnection } from "typeorm";
+const mongoose = require('mongoose');
 
-createConnection()
+mongoose.connect('mongodb://localhost/db',{useMongoClient: true});
+mongoose.Promise = global.Promise;
+
+module.exports = mongoose;

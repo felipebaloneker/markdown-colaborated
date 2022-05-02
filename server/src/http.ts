@@ -1,12 +1,11 @@
-import 'reflect-metadata';
+// import 'reflect-metadata';
 import express, {Request,Response, NextFunction} from 'express';
-import http from "http";
 import { Server } from 'socket.io'
+import bodyParser from 'body-parser'
+import http from "http";
 import cors from 'cors';
 
 const app = express();
-
-import './database';
 
 app.use(cors({
     origin: ['http://localhost:3000'],
@@ -14,8 +13,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 }))
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.use((err:Error, request:Request, response:Response, next: NextFunction)=>{
     if(err instanceof Error){

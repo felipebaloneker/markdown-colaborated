@@ -1,4 +1,7 @@
 import { io } from "./http";
+const Documents = require('./models/documents')
+const users: IUsers[] =[]
+const Users:IUsers[] = require('./models/users')
 
 interface IUsers {
   socket_id: string;
@@ -11,8 +14,6 @@ interface IDocument {
   updatedAt: Date
 }
 
-const users: IUsers[] =[]
-const document: IDocument[] = []
 
 io.on('connection', socket => {
 
@@ -24,11 +25,12 @@ io.on('connection', socket => {
           userInRoom.socket_id = socket.id;
         }
         else{
-          users.push({
-            name:data.name,
-            socket_id:socket.id,
-            room:data.room,
-          })
+          // users.push({
+          //   name:data.name,
+          //   socket_id:socket.id,
+          //   room:data.room,
+          // })
+          
         }
         io.in(data.room).emit("select_room",users)
     });
@@ -39,8 +41,10 @@ io.on('connection', socket => {
             body: data.body,
             updatedAt: new Date(),
       }
-      document.push(text)
-      io.in(data.id).emit("document",text)
+      const document = new Documents({text})
+      document.save().then(()=>{
+        io.in(data.id).emit("document",text)
+      })
     });
 
     socket.on("document",(data)=>{

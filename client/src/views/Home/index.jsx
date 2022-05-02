@@ -4,7 +4,6 @@ import {useAuth} from '../../hook/useAuth'
 import ReactMarkdown from 'react-markdown';
 import './styles.scss'
 import { useView } from '../../hook/useView';
-import io from 'socket.io-client';
 
 function Home(){
     const params = useParams();
@@ -12,8 +11,9 @@ function Home(){
     const {user} = useAuth()
     const [text,setText]= useState('')
     const {users} = useView()
-    console.log(users)
-    console.log("view:"+users)
+
+    
+
     return(
        <div className="page">
            <div className="header">

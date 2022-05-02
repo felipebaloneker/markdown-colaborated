@@ -1,8 +1,10 @@
 version: '3'
 
 services:
-  db:
+  mongo:
     image: mongo
+    container_name: mongo-markdown
+    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root

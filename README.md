@@ -21,7 +21,7 @@ consiste em um editor de markdown onde usuarios interagem e podem editar documen
 ### Precisa ter instalado na maquina:
 - [NodeJs](https://nodejs.org/en/)
 - [Docker Desktop](https://www.docker.com/get-started/)
-- [VSCode](https://code.visualstudio.com)(ou editor de preferencia)
+- [VSCode](https://code.visualstudio.com)
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
 
 Para installar o yarn abrar cmd como administrador e digite:
@@ -37,27 +37,34 @@ git clone https://github.com/felipebaloneker/markdown-colaborated.git
 instale o docker composer na sua maquina, abra o vscode na pasta do projeto e execute o seguinte script no terminal:
 
 ```bash
+#criar mongodb
+
 docker-compose up -d
 ```
 ele cria um banco mongodb apartir do arquivo 'docker-compose.yml' na raiz do projeto.
 
 ### Dependências e Inicialização:
-Primeiro precisamos iniciar o servidor.Abra a pasta server no terminal e digite o seguinte comando:
+Primeiro precisamos iniciar o servidor. Abra o terminal do  Vscode e digite o seguinte comando:
 ``` bash
+# abrir pasta server
+cd server
+
 # instalar depenências
 yarn install
 
 # iniciar 
 yarn dev
 ```
-Após esse processo o servidor será iniciado em :
+Após esse processo o servidor será iniciado em: http://localhost:4000
 
-Agora iniciaremos o nosso cliente web. No terminal ainda na pasta server retorne uma pasta e agora abra a pasta client e digite o seguinte comando:
+Agora iniciaremos o nosso cliente web. Abrar uma nova aba No terminal e digite o seguinte comando:
 ```bash
+# abrir pasta client
+cd client
 # instalar depenências
 yarn install
 
 # iniciar 
 yarn start
 ```
-
+Agora podemos abrir o prejto no navegador em: http://localhost:3000

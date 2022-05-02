@@ -16,4 +16,6 @@ const DocumentSchema = new mongo.Schema({
     }
 })
 
-const documents = mongo.model('Documents', DocumentSchema)
+const Documents = mongo.model('Documents', DocumentSchema)
+
+module.exports = Documents;

@@ -1,9 +1,9 @@
-// import 'reflect-metadata';
 import express, {Request,Response, NextFunction} from 'express';
 import { Server } from 'socket.io'
 import bodyParser from 'body-parser'
 import http from "http";
 import cors from 'cors';
+import './database/index'
 
 const app = express();
 

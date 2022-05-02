@@ -1,4 +1,5 @@
 import { serverHttp } from "./http";
 import "./websocket"
+const Port = 4000
 
-serverHttp.listen(4000, ()=> console.log('Server is running'))
+serverHttp.listen(Port, ()=> console.log(`Server is running on port ${Port}`))

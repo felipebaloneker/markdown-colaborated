@@ -11,9 +11,6 @@ function Home(){
     const {user} = useAuth()
     const [text,setText]= useState('')
     const {users} = useView()
-
-    
-
     return(
        <div className="page">
            <div className="header">
@@ -35,7 +32,13 @@ function Home(){
                     
                     </div>
                     <div className='text'>
-                        <textarea name="text-area"
+                        <div
+                        className='line-numbers'
+                        >{}</div>
+                        <textarea 
+                        id='text'
+                        name="text-area"
+                        className='lined-area'
                         autoFocus
                         value={text}
                         onChange={(e)=>{setText(e.target.value)}}

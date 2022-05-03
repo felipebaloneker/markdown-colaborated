@@ -20,12 +20,11 @@ function Home(){
             socket.emit('document',{
                 id:code 
             })
-            socket.on('document',(data) =>{
-               body.push(data)
+            socket.on('document',data =>{
+                console.log(data)
+                setText(data.body)
             })
-            console.log(body)
-            return () => socket.disconnect()
-        })
+        },[])
 
     return(
        <div className="page">

@@ -51,12 +51,11 @@ io.on('connection', socket => {
       const find = await Documents.findOne({
         _id:data.id
       }).then((res)=>{
-        body.push(res)
+        socket.emit('document',res)
+        io.in(data.id).emit("document",res)
       })
       
       if(find){
-        console.log(body)
-        io.in(data.id).emit("document",body)
       }
     })
     socket.on("edit_document",(data)=>{

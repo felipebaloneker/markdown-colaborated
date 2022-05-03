@@ -14,11 +14,16 @@ export default {
 
   createDocument: async()=>{
     const socket = io.connect('http://localhost:4000');
+    let room = []
     socket.emit('create_room')
     socket.on('create_room',(data) =>{
-      return localStorage.setItem('room',data._id)
+      room.push({
+          id:data._id,
+          body:data.body,
+          updatedAt:data.updatedAt,
+      })
     }) 
-     return
+     return room
     }
 
 }

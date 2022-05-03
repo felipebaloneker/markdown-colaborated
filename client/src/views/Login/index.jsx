@@ -26,12 +26,19 @@ function Login(){
 
     const createDocument=async (e)=>{
       e.preventDefault()
-      api.createDocument().then()
-      setUser({
-        name:localStorage.getItem('name'),
-        room:localStorage.getItem('room')
-      })
-      navigate(`/markdown/${localStorage.getItem('room')}`)
+      const socket = io.connect('http://localhost:4000');
+      socket.emit('create_room')
+      socket.on('create_room', (data) =>{
+        localStorage.setItem('name', name)
+        localStorage.setItem('room', data._id)
+         setUser({
+           name:name,
+           room:data._id
+          })
+          return navigate(`/markdown/${data._id}`)
+      }) 
+      return
+      
     }
 
     return (

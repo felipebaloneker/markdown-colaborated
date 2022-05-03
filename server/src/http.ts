@@ -3,7 +3,8 @@ import { Server } from 'socket.io'
 import bodyParser from 'body-parser'
 import http from "http";
 import cors from 'cors';
-import './database/index'
+
+import './database'
 
 const app = express();
 

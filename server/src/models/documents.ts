@@ -1,11 +1,6 @@
-const mongo = require('mongoose');
+import { mongoose } from "../database";
 
-const DocumentSchema = new mongo.Schema({
-    id:{
-        type:String,
-        require:true,
-        unique:true,
-    },
+const DocumentSchema = new mongoose.Schema({
     body:{
         type:String,
         require:true,
@@ -16,6 +11,6 @@ const DocumentSchema = new mongo.Schema({
     }
 })
 
-const Documents = mongo.model('Documents', DocumentSchema)
+const Documents = mongoose.model('Documents', DocumentSchema)
 
 module.exports = Documents;

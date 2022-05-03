@@ -25,7 +25,7 @@ function Login(){
 
     const createDocument=(e)=>{
       e.preventDefault()
-      api.createDocument(name)
+      api.createDocument(name).then()
       api.logout()
       localStorage.setItem('name', name)
       localStorage.setItem('room', room)
@@ -33,7 +33,7 @@ function Login(){
         name:localStorage.getItem('name'),
         room:localStorage.getItem('room')
       })
-      navigate(`/markdown/1234`)
+      // navigate(`/markdown/`)
     }
 
     return (

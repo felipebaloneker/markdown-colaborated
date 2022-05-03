@@ -16,14 +16,11 @@ export default {
   createDocument: async(name)=>{
     const socket = io.connect('http://localhost:4000');
 
-    socket.emit('create_room',{
-      id:'1234',
-      body:'',
-     })
-     socket.emit('select_room',{
-      name,
-      room:'1234'
-     })
+    socket.emit('create_room',{})
+    //  socket.emit('select_room',{
+    //   name,
+    //   room:'1234'
+    //  })
   }
 
 }

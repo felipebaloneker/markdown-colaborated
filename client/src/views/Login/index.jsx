@@ -24,7 +24,7 @@ function Login(){
       navigate(`/markdown/${room}`)
     }
 
-    const createDocument=async (e)=>{
+    const createDocument = async (e)=>{
       e.preventDefault()
       const socket = io.connect('http://localhost:4000');
       socket.emit('create_room')

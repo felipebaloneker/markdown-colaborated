@@ -2,7 +2,7 @@ import { useEffect,useState,useRef } from "react"
 import io from 'socket.io-client';
 
 export function useView(){
-    const [users,setUsers] = useState('')
+    const [users,setUsers] = useState()
     
     useEffect(()=>{
         const socket = io.connect('http://localhost:4000');
@@ -11,6 +11,7 @@ export function useView(){
             room:localStorage.getItem('room')
         })
         socket.on('select_room',(data) =>{
+            console.log(data)
            setUsers(`${data.length}`)
         })
         return () => socket.disconnect()

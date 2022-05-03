@@ -1,8 +1,7 @@
 import { io } from "./http";
 const Documents = require('./models/documents')
-const users: IUsers[] =[]
+const users: IUsers[] = []
 const Users = require('./models/users')
-
 interface IUsers {
   socket_id: string;
   name:string;
@@ -45,8 +44,9 @@ io.on('connection', socket => {
             room:data.room,
           })
         }
-        console.log(users)
-        io.in(data.room).emit("select_room",users)
+        const usersIn = users.filter(user => user.room === data.room)
+        console.log(usersIn)
+        io.in(data.room).emit("select_room",usersIn)
     });
 
     socket.on("create_room",()=>{

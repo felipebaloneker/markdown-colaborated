@@ -52,13 +52,19 @@ io.on('connection', socket => {
         _id:data.id
       }).then((res)=>{
         socket.emit('document',res)
-        io.in(data.id).emit("document",res)
       })
       
       if(find){
+        io.in(data.id).emit("document",body)
       }
     })
-    socket.on("edit_document",(data)=>{
-
+    socket.on("change_document",async (data)=>{
+      console.log('body:'+data.body)
+      Documents.updateOne({_id:data.id},{
+        $set:{
+          body:data.body,
+          updatedAt:new Date
+        }
+      })
     })
   })

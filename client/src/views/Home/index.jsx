@@ -13,17 +13,27 @@ function Home(){
     const [text,setText]= useState('')
     const {users} = useView()
 
+    const changeText=(e)=>{
+        const socket = io.connect('http://localhost:4000');
+        socket.emit('change_document',{
+            id:code,
+            body:e
+        })
+        setText(e)
+
+    }
 
     useEffect(()=>{
-            let body = []
             const socket = io.connect('http://localhost:4000');
-            socket.emit('document',{
-                id:code 
-            })
-            socket.on('document',data =>{
-                console.log(data)
-                setText(data.body)
-            })
+            const timer = setInterval(()=>{
+                socket.emit('document',{
+                    id:code 
+                })
+                socket.on('document',data =>{
+                   return setText(data.body)
+                })
+            },1000)
+            return ()=> clearInterval(timer)
         },[])
 
     return(
@@ -56,7 +66,7 @@ function Home(){
                         className='lined-area'
                         autoFocus
                         value={text}
-                        onChange={(e)=>{setText(e.target.value)}}
+                        onChange={(e)=>{changeText(e.target.value)}}
                         ></textarea>
                     </div>
                 </div>

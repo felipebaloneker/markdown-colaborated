@@ -17,21 +17,6 @@ io.on('connection', socket => {
 
     socket.on("select_room",(data)=>{
       socket.join(data.room)
-      // const userInRoom = Users.findOne({where:{
-      //     name:data.name,
-      //     room:data.room
-      //   }})
-      // if(userInRoom){
-      //   userInRoom.socket_id = socket.id;
-      // }
-      // else{
-
-      // }
-      // const users: IUsers = new Users({
-      //   name:data.name,
-      //   socket_id:socket.id,
-      //   room:data.room
-      // })
       const userInRoom = users.find(
         (user)=> user.name === data.name && user.room === data.room);
         if(userInRoom){
@@ -45,7 +30,6 @@ io.on('connection', socket => {
           })
         }
         const usersIn = users.filter(user => user.room === data.room)
-        console.log(usersIn)
         io.in(data.room).emit("select_room",usersIn)
     });
 
@@ -63,6 +47,15 @@ io.on('connection', socket => {
     });
 
     socket.on("document",(data)=>{
+      console.log("Id:"+data.id)
+      const find = Documents.findOne({
+        _id: data.id
+      }).then(res =>{
+        console.log("res:"+res)
+      })
+     if(find){
+       console.log(find)
+     }
       // const find = document.find(
       //   (doc)=> doc.id === data.id
       // )

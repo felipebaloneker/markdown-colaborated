@@ -59,8 +59,19 @@ io.on('connection', socket => {
       }
     })
     socket.on("change_document",async (data)=>{
-      console.log('body:'+data.body)
-      Documents.updateOne({_id:data.id},{
+      console.log(data.body)
+      const find = await Documents.findOne({
+        _id:data.id
+      }).then((res)=>{
+        console.log(res)
+        socket.emit('document',res)
+      })
+      
+      if(find){
+        io.in(data.id).emit("document",body)
+      }
+
+      await Documents.updateOne({_id:data.id},{
         $set:{
           body:data.body,
           updatedAt:new Date

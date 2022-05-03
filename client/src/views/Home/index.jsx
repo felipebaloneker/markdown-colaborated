@@ -15,15 +15,17 @@ function Home(){
 
 
     useEffect(()=>{
+            let body = []
             const socket = io.connect('http://localhost:4000');
             socket.emit('document',{
                 id:code 
             })
             socket.on('document',(data) =>{
-                console.log(data)
+               body.push(data)
             })
+            console.log(body)
             return () => socket.disconnect()
-        },[])
+        })
 
     return(
        <div className="page">

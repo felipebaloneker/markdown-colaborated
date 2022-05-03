@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import './styles.scss'
 import api from '../../services/api';
 import {useAuth} from '../../hook/useAuth';
+import io from 'socket.io-client';
 
 function Login(){
     const [name,setName] = useState('')
@@ -23,17 +24,14 @@ function Login(){
       navigate(`/markdown/${room}`)
     }
 
-    const createDocument=(e)=>{
+    const createDocument=async (e)=>{
       e.preventDefault()
-      api.createDocument(name).then()
-      api.logout()
-      localStorage.setItem('name', name)
-      localStorage.setItem('room', room)
+      api.createDocument().then()
       setUser({
         name:localStorage.getItem('name'),
         room:localStorage.getItem('room')
       })
-      // navigate(`/markdown/`)
+      navigate(`/markdown/${localStorage.getItem('room')}`)
     }
 
     return (

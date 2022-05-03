@@ -44,18 +44,21 @@ io.on('connection', socket => {
             socket_id:socket.id,
             room:data.room,
           })
-         
         }
+        console.log(users)
         io.in(data.room).emit("select_room",users)
     });
 
-    socket.on("create_room", async ()=>{
+    socket.on("create_room",()=>{
       //criando instancia
       const document = new Documents({
         body:'',
         updatedAt: new Date,
       })
-      await document.save(function(err,doc){console.log(err+doc)})
+      document.save().then(()=>{
+        console.log('Document'+document)
+        socket.emit('create_room',document)
+      })
 
     });
 

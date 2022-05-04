@@ -1,6 +1,5 @@
 import { io } from "./http";
 const Documents = require('./models/documents')
-// const users: IUsers[] = []
 const Users = require('./models/users')
 
 io.on('connection', socket => {
@@ -24,12 +23,6 @@ io.on('connection', socket => {
           users.save().then(()=>{
             console.log("New User:"+users)
           })
-          // users.push({
-          //   name:data.name,
-          //   socket_id:socket.id,
-          //   room:data.room,
-          //   cursor_position:'0'
-          // })
         }
         await Users.find({
             room:data.room
@@ -52,16 +45,13 @@ io.on('connection', socket => {
     });
 
     socket.on("document",async (data)=>{
-      let body = [];
-      const find = await Documents.findOne({
+      await Documents.findOne({
         _id:data.id
       }).then((res)=>{
         socket.emit('document',res)
+        io.in(data.id).emit("document",res)
       })
       
-      if(find){
-        io.in(data.id).emit("document",body)
-      }
     })
     socket.on("change_document",async (data)=>{
       await Documents.findOne({
@@ -76,6 +66,24 @@ io.on('connection', socket => {
           body:data.body,
           updatedAt:new Date
         }
+      })
+    })
+    socket.on("change_cursor", async(data)=>{
+      await Users.updateOne(
+        {
+        name:data.name,
+        room:data.room
+        },
+        {
+          $set:{
+            cursor_position:data.position
+          }
+        }
+      )
+      await Users.findOne({name:data.name,room:data.room})
+      .then((res)=>{
+        console.log(res)
+        io.in(data.room).emit('change_cursor',res)
       })
     })
   })

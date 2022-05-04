@@ -12,7 +12,9 @@ function Home(){
     const {user} = useAuth()
     const [text,setText]= useState('')
     const {users} = useView()
+    const textRef = useRef()
 
+    //changing document
     const changeText=(e)=>{
         const socket = io.connect('http://localhost:4000');
         socket.emit('change_document',{
@@ -22,7 +24,13 @@ function Home(){
         setText(e)
 
     }
-
+    // geting cursor position
+    useEffect(()=>{
+        textRef.current.addEventListener('keyup', e => {
+            console.log('Cursor Position: ', e.target.selectionStart)
+          })
+    })
+    //geting document changes
     useEffect(()=>{
             const socket = io.connect('http://localhost:4000');
             const timer = setInterval(()=>{
@@ -63,6 +71,7 @@ function Home(){
                         <textarea 
                         id='text'
                         name="text-area"
+                        ref={textRef}
                         className='lined-area'
                         autoFocus
                         value={text}

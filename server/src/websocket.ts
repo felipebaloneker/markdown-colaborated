@@ -18,11 +18,9 @@ io.on('connection', socket => {
             socket_id:socket.id,
             name:data.name,
             room:data.room,
-            cursor_position:'0'
+            cursor_position:0
           })
-          users.save().then(()=>{
-            console.log("New User:"+users)
-          })
+          users.save()
         }
         await Users.find({
             room:data.room
@@ -38,7 +36,6 @@ io.on('connection', socket => {
         updatedAt: new Date,
       })
       document.save().then(()=>{
-        console.log('Document'+document)
         socket.emit('create_room',document)
       })
 
@@ -58,7 +55,6 @@ io.on('connection', socket => {
         _id:data.id
       })
       .then((res)=>{
-        console.log(res)
         socket.emit('document',res)
       })
       await Documents.updateOne({_id:data.id},{
@@ -69,6 +65,10 @@ io.on('connection', socket => {
       })
     })
     socket.on("change_cursor", async(data)=>{
+      await Users.findOne({name:data.name,room:data.room})
+      .then((res)=>{
+        io.in(data.room).emit('change_cursor',res)
+      })
       await Users.updateOne(
         {
         name:data.name,
@@ -80,10 +80,6 @@ io.on('connection', socket => {
           }
         }
       )
-      await Users.findOne({name:data.name,room:data.room})
-      .then((res)=>{
-        console.log(res)
-        io.in(data.room).emit('change_cursor',res)
-      })
+
     })
   })

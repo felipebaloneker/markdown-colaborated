@@ -12,18 +12,4 @@ export default {
      })
   },
 
-  createDocument: async()=>{
-    const socket = io.connect('http://localhost:4000');
-    let room = []
-    socket.emit('create_room')
-    socket.on('create_room',(data) =>{
-      room.push({
-          id:data._id,
-          body:data.body,
-          updatedAt:data.updatedAt,
-      })
-    }) 
-     return room
-    }
-
 }

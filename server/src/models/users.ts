@@ -13,6 +13,10 @@ const UserSchema = new mongoo.Schema({
     room:{
         type: String,
         require:true,
+    },
+    cursor_position:{
+        type:String,
+        require:true
     }
 })
 

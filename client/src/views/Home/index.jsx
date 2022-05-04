@@ -10,9 +10,11 @@ function Home(){
     const params = useParams();
     const code = params.id
     const {user} = useAuth()
+    const [cursor,setCursor] = useState()
     const [text,setText]= useState('')
     const {users} = useView()
     const textRef = useRef()
+
     //changing document
     const changeText=(e)=>{
         const socket = io.connect('http://localhost:4000');
@@ -26,8 +28,17 @@ function Home(){
     // geting cursor position
     useEffect(()=>{
         textRef.current.addEventListener('keyup', e => {
-            console.log('Cursor Position: ', e.target.selectionStart)
+            const socket = io.connect('http://localhost:4000');
+            socket.emit('change_cursor',{
+                name:user.name,
+                room:code,
+                position:e.target.selectionStart,
+            })
+            socket.on('change_cursor',data=>{
+                return console.log('data:'+data)
+            })
           })
+          
     })
     //geting document changes
     useEffect(()=>{
@@ -42,6 +53,7 @@ function Home(){
             },1000)
             return ()=> clearInterval(timer)
         },[])
+  
 
     return(
        <div className="page">

@@ -13,7 +13,6 @@ function Home(){
     const [text,setText]= useState('')
     const {users} = useView()
     const textRef = useRef()
-
     //changing document
     const changeText=(e)=>{
         const socket = io.connect('http://localhost:4000');
@@ -51,7 +50,10 @@ function Home(){
                     <p>Olá, {user.name}</p>
                </div>
                <div className='room_view'>
-                    <span>View: {users}</span>
+                    <span>
+                        View:
+                        {users? users.length : ''}
+                    </span>
                </div>
                <div className="code">
                    <p>Código:</p>

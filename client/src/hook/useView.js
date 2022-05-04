@@ -11,7 +11,7 @@ export function useView(){
             room:localStorage.getItem('room')
         })
         socket.on('select_room',(data) =>{
-           setUsers(`${data.length}`)
+           setUsers(data)
         })
         return () => socket.disconnect()
     },[])

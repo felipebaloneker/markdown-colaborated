@@ -1,36 +1,41 @@
 import { io } from "./http";
 const Documents = require('./models/documents')
-const users: IUsers[] = []
+// const users: IUsers[] = []
 const Users = require('./models/users')
-interface IUsers {
-  socket_id: string;
-  name:string;
-  room:string;
-}
-interface IDocument {
-  body: string;
-  updatedAt: Date
-}
-
 
 io.on('connection', socket => {
 
-    socket.on("select_room",(data)=>{
+    socket.on("select_room", async (data)=>{
       socket.join(data.room)
-      const userInRoom = users.find(
-        (user)=> user.name === data.name && user.room === data.room);
+      const userInRoom = await Users.findOne({
+        name:data.name,
+        room:data.room
+      });
         if(userInRoom){
           userInRoom.socket_id = socket.id;
         }
         else{
-          users.push({
-            name:data.name,
+          const users = new Users({
             socket_id:socket.id,
+            name:data.name,
             room:data.room,
+            cursor_position:'0'
           })
+          users.save().then(()=>{
+            console.log("New User:"+users)
+          })
+          // users.push({
+          //   name:data.name,
+          //   socket_id:socket.id,
+          //   room:data.room,
+          //   cursor_position:'0'
+          // })
         }
-        const usersIn = users.filter(user => user.room === data.room)
-        io.in(data.room).emit("select_room",usersIn)
+        await Users.find({
+            room:data.room
+        }).then((res)=>{
+          io.in(data.room).emit("select_room",res)
+        })
     });
 
     socket.on("create_room",()=>{

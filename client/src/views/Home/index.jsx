@@ -35,10 +35,9 @@ function Home(){
                 position:e.target.selectionStart,
             })
             socket.on('change_cursor',data=>{
-                return console.log('data:'+data)
+                return console.log(data)
             })
           })
-          
     })
     //geting document changes
     useEffect(()=>{
@@ -82,6 +81,10 @@ function Home(){
                         <div
                         className='line-numbers'
                         >{}</div>
+                        <div className='text-wrp'>
+                        <div className="cursors">
+                            
+                        </div>
                         <textarea 
                         id='text'
                         name="text-area"
@@ -90,7 +93,9 @@ function Home(){
                         autoFocus
                         value={text}
                         onChange={(e)=>{changeText(e.target.value)}}
-                        ></textarea>
+                        >
+                        </textarea>
+                        </div>
                     </div>
                 </div>
                 <div className="preview">

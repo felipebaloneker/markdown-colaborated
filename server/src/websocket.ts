@@ -65,21 +65,22 @@ io.on('connection', socket => {
       })
     })
     socket.on("change_cursor", async(data)=>{
-      await Users.findOne({name:data.name,room:data.room})
+      await Users.find({name:data.name,room:data.room})
       .then((res)=>{
-        io.in(data.room).emit('change_cursor',res)
+        io.to(data.room).emit('change_cursor',res)
       })
       await Users.updateOne(
         {
-        name:data.name,
-        room:data.room
+          name:data.name,
+          room:data.room
         },
         {
           $set:{
             cursor_position:data.position
           }
         }
-      )
+        )
 
+        
     })
   })

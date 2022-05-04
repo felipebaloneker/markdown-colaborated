@@ -49,7 +49,7 @@ function Home(){
                 socket.on('document',data =>{
                    return setText(data.body)
                 })
-            },1000)
+            },1000 * 2)
             return ()=> clearInterval(timer)
         },[])
   

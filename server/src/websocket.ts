@@ -78,8 +78,24 @@ io.on('connection', socket => {
             cursor_position:data.position
           }
         }
+        )     
+    })
+    socket.on("logout_user",async(data)=>{
+      await Users.find({name:data.name,room:data.room})
+      .then((res)=>{
+        io.to(data.room).emit('change_cursor',res)
+      })
+      await Users.updateOne(
+        {
+          name:data.name,
+          room:data.room
+        },
+        {
+          $set:{
+            cursor_position:'0,0',
+            room:''
+          }
+        }
         )
-
-        
     })
   })

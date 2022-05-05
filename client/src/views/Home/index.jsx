@@ -2,17 +2,16 @@ import { useParams } from 'react-router';
 import { useEffect, useRef, useState } from 'react';
 import {useAuth} from '../../hook/useAuth'
 import ReactMarkdown from 'react-markdown';
-import './styles.scss'
-import { useView } from '../../hook/useView';
-import io from 'socket.io-client';
 import getCaretCoordinates from 'textarea-caret'
+import io from 'socket.io-client';
+import {useNavigate} from 'react-router-dom'
 import UserCursor from '../../component/UserCursor';
-import { GrBold } from "react-icons/gr";
+import { useView } from '../../hook/useView';
 import { BsSave2Fill} from "react-icons/bs";
 import {RiLogoutBoxFill} from "react-icons/ri";
 import { jsPDF } from "jspdf";
 import api from '../../services/api';
-import {useNavigate} from 'react-router-dom'
+import './styles.scss'
 
 function Home(){
     const params = useParams();
@@ -81,6 +80,7 @@ function Home(){
         window.location.reload()
         
     }
+    const setBarOption=()=>{}
     if(user.name !== null){
     return(
        <div className="page">
@@ -126,7 +126,6 @@ function Home(){
                             <li><button><BsSave2Fill color={'#fff'} className='save' data-element='bold'
                             onClick={saveAsPdf}
                             /></button></li>
-                            <li><button><GrBold className='bold' data-element='bold'/></button></li>
                         </ul>
                     </div>
                     <div className='text'>
@@ -145,7 +144,8 @@ function Home(){
                     </div>
                 </div>
                 <div className="preview" id='pdf' ref={pdfRef}>
-                    <ReactMarkdown children={text} className='text'/>
+                    <ReactMarkdown children={text} className='text'
+                    />
                 </div>
                </div>
            </div>

@@ -1,3 +1,4 @@
+import './styles.scss'
 function UserCursor({top,left,name,id}){   
     const style = {
         top: `${top}px`,

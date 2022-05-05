@@ -48,14 +48,13 @@ io.on('connection', socket => {
         socket.emit('document',res)
         io.in(data.id).emit("document",res)
       })
-      
     })
     socket.on("change_document",async (data)=>{
       await Documents.findOne({
         _id:data.id
       })
       .then((res)=>{
-        socket.emit('document',res)
+        socket.emit('change_document',res)
       })
       await Documents.updateOne({_id:data.id},{
         $set:{

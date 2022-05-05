@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import './styles.scss'
 import { useView } from '../../hook/useView';
 import io from 'socket.io-client';
-
+import getCaretCoordinates from 'textarea-caret'
 function Home(){
     const params = useParams();
     const code = params.id
@@ -23,22 +23,20 @@ function Home(){
             body:e
         })
         setText(e)
-
     }
-    // geting cursor position
+
+    // change cursor position
     useEffect(()=>{
         textRef.current.addEventListener('keyup', e => {
+            var caret = getCaretCoordinates(e.target, e.target.selectionEnd);
             const socket = io.connect('http://localhost:4000');
             socket.emit('change_cursor',{
                 name:user.name,
                 room:code,
-                position:e.target.selectionStart,
-            })
-            socket.on('change_cursor',data=>{
-                return console.log(data)
+                position:`${caret.left},${caret.top}`,
             })
           })
-    })
+    },[])
     //geting document changes
     useEffect(()=>{
             const socket = io.connect('http://localhost:4000');
@@ -49,7 +47,7 @@ function Home(){
                 socket.on('document',data =>{
                    return setText(data.body)
                 })
-            },1000 * 2)
+            },1000)
             return ()=> clearInterval(timer)
         },[])
   
@@ -78,13 +76,34 @@ function Home(){
                     
                     </div>
                     <div className='text'>
-                        <div
-                        className='line-numbers'
-                        >{}</div>
                         <div className='text-wrp'>
-                        <div className="cursors">
-                            
-                        </div>
+                            {users ? 
+                                users.map(item=>{
+                                   const [x,y]= item.cursor_position.split(',')
+                                   const left = x.replace(/'/g, '')
+                                   const top = y.replace(/'/g, '') - 32
+                                   console.log(top)
+                                    const style = {
+                                        top: `${top}px`,
+                                        left:`${left}px`
+                                      };                                  
+                                    return (
+                                        <div 
+                                        className="user-cursor"
+                                        id={item._id}
+                                        style={style}
+                                        >
+                                            <div className="name">
+                                                {item.name}
+                                            </div>
+                                            <div className="cursor">
+                                                <span>|</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                                :''
+                            }
                         <textarea 
                         id='text'
                         name="text-area"

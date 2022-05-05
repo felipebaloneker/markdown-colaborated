@@ -6,6 +6,7 @@ export function useView(){
     
     useEffect(()=>{
         const socket = io.connect('http://localhost:4000');
+       const timer = setInterval(()=>{
         socket.emit('select_room',{
             name:localStorage.getItem('name'),
             room:localStorage.getItem('room')
@@ -13,7 +14,8 @@ export function useView(){
         socket.on('select_room',(data) =>{
            setUsers(data)
         })
-        return () => socket.disconnect()
+       },1000)
+        return () => clearInterval(timer)
     },[])
     return {users}
 }

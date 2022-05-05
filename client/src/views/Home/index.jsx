@@ -4,6 +4,7 @@ import {useAuth} from '../../hook/useAuth'
 import ReactMarkdown from 'react-markdown';
 import getCaretCoordinates from 'textarea-caret'
 import io from 'socket.io-client';
+import remarkGfm from 'remark-gfm'
 import {useNavigate} from 'react-router-dom'
 import UserCursor from '../../component/UserCursor';
 import { useView } from '../../hook/useView';
@@ -145,6 +146,7 @@ function Home(){
                 </div>
                 <div className="preview" id='pdf' ref={pdfRef}>
                     <ReactMarkdown children={text} className='text'
+                    remarkPlugins={[remarkGfm]}
                     />
                 </div>
                </div>

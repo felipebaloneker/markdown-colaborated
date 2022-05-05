@@ -1,6 +1,6 @@
 ## Markdown Colaborativo
 consiste em um editor de markdown onde usuarios interagem e podem editar documentos simultaneamente
-
+<img src='.github/image.gif'>
 
 ## 🕹️ Tecnologias Utilizadas
 - [React Native](https://reactjs.org)

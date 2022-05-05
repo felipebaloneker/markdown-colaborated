@@ -9,17 +9,20 @@ import getCaretCoordinates from 'textarea-caret'
 import UserCursor from '../../component/UserCursor';
 import { GrBold } from "react-icons/gr";
 import { BsSave2Fill} from "react-icons/bs";
+import {RiLogoutBoxFill} from "react-icons/ri";
 import { jsPDF } from "jspdf";
+import api from '../../services/api';
+import {useNavigate} from 'react-router-dom'
 
 function Home(){
     const params = useParams();
     const code = params.id
-    const {user} = useAuth()
+    const {user,setUser} = useAuth()
     const [text,setText]= useState('')
     const {users} = useView()
     const textRef = useRef()
     const pdfRef = useRef()
-
+    const navigate = useNavigate()
     //changing document
     const changeText = (e)=>{
         const socket = io.connect('http://localhost:4000');
@@ -70,10 +73,20 @@ function Home(){
             }
         })
     }
+
+    const logOut = async ()=>{
+        await api.logout(code,user?.name)
+        setUser([])
+        navigate(`/`)
+        window.location.reload()
+        
+    }
+    if(user.name !== null){
     return(
        <div className="page">
            <div className="header">
                <div className='username'>
+                   <button><RiLogoutBoxFill onClick={logOut}/></button>
                     <p>Olá, {user.name}</p>
                </div>
                <div className='room_view'>
@@ -137,6 +150,10 @@ function Home(){
                </div>
            </div>
        </div>
-    )
+    )        
+    }
+    else{
+        return(<></>)
+    }
 }
 export default Home

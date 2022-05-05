@@ -12,6 +12,20 @@
         align-items: center;
         font-weight: 700;
         color:var(--light-color);
+        .username{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            button{
+                font-size: 1.2rem;
+                margin-right: .2rem;
+                border: none;
+                background-color: transparent;
+                color:var(--light-color);
+                cursor: pointer;
+
+            }
+        }
         .code{
             display: flex;
             justify-content: center;
@@ -25,12 +39,14 @@
         }
     }
 }
+
 .editor{
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
+
 .editor_container{
     width: 90%;
     height:90%;

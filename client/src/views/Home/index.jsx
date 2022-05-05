@@ -10,19 +10,19 @@ function Home(){
     const params = useParams();
     const code = params.id
     const {user} = useAuth()
-    const [cursor,setCursor] = useState()
     const [text,setText]= useState('')
     const {users} = useView()
     const textRef = useRef()
 
     //changing document
-    const changeText=(e)=>{
+    const changeText = (e)=>{
         const socket = io.connect('http://localhost:4000');
         socket.emit('change_document',{
-            id:code,
-            body:e
-        })
+                id:code,
+                body:e
+            })
         setText(e)
+        return ()=> socket.disconnect()
     }
 
     // change cursor position
@@ -37,6 +37,7 @@ function Home(){
             })
           })
     },[])
+
     //geting document changes
     useEffect(()=>{
             const socket = io.connect('http://localhost:4000');
@@ -47,8 +48,10 @@ function Home(){
                 socket.on('document',data =>{
                    return setText(data.body)
                 })
-            },1000)
-            return ()=> clearInterval(timer)
+            },1000 * 2)
+            return ()=> {
+                clearInterval(timer)
+            }
         },[])
   
 
@@ -72,38 +75,39 @@ function Home(){
            <div className="editor">
                <div className="editor_container">
                 <div className="text-area">
+                {users ? 
+                                users.map(item=>{
+                                  if(item.name !== user.name){
+                                    const [x,y]= item.cursor_position.split(',')
+                                    const left = Number(x)
+                                    const top = Number(y) +15
+                                     const style = {
+                                         top: `${top}px`,
+                                         left:`${left}px`
+                                       };                                  
+                                     return (
+                                         <div 
+                                         className="user-cursor"
+                                         id={item._id}
+                                         style={style}
+                                         >
+                                             <div className="name">
+                                                 {item.name}
+                                             </div>
+                                             <div className="cursor">
+                                                 <span>|</span>
+                                             </div>
+                                         </div>
+                                     )
+                                  }
+                                })
+                                :''
+                            }
                     <div className="toolbar">
                     
                     </div>
                     <div className='text'>
                         <div className='text-wrp'>
-                            {users ? 
-                                users.map(item=>{
-                                   const [x,y]= item.cursor_position.split(',')
-                                   const left = x.replace(/'/g, '')
-                                   const top = y.replace(/'/g, '') - 32
-                                   console.log(top)
-                                    const style = {
-                                        top: `${top}px`,
-                                        left:`${left}px`
-                                      };                                  
-                                    return (
-                                        <div 
-                                        className="user-cursor"
-                                        id={item._id}
-                                        style={style}
-                                        >
-                                            <div className="name">
-                                                {item.name}
-                                            </div>
-                                            <div className="cursor">
-                                                <span>|</span>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                                :''
-                            }
                         <textarea 
                         id='text'
                         name="text-area"

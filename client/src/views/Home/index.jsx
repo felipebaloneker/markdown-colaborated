@@ -7,6 +7,9 @@ import { useView } from '../../hook/useView';
 import io from 'socket.io-client';
 import getCaretCoordinates from 'textarea-caret'
 import UserCursor from '../../component/UserCursor';
+import { GrBold } from "react-icons/gr";
+import { BsSave2Fill} from "react-icons/bs";
+import { jsPDF } from "jspdf";
 
 function Home(){
     const params = useParams();
@@ -15,6 +18,7 @@ function Home(){
     const [text,setText]= useState('')
     const {users} = useView()
     const textRef = useRef()
+    const pdfRef = useRef()
 
     //changing document
     const changeText = (e)=>{
@@ -56,7 +60,16 @@ function Home(){
             }
         },[])
   
+    const saveAsPdf=()=>{
+        const content = pdfRef.current;
 
+        const doc = new jsPDF('p','pt','a4');
+        doc.html(content, {
+            callback: function (doc) {
+                doc.save('sample.pdf');
+            }
+        })
+    }
     return(
        <div className="page">
            <div className="header">
@@ -96,7 +109,12 @@ function Home(){
                                 :''
                             }
                     <div className="toolbar">
-                    
+                        <ul>
+                            <li><button><BsSave2Fill color={'#fff'} className='save' data-element='bold'
+                            onClick={saveAsPdf}
+                            /></button></li>
+                            <li><button><GrBold className='bold' data-element='bold'/></button></li>
+                        </ul>
                     </div>
                     <div className='text'>
                         <div className='text-wrp'>
@@ -113,7 +131,7 @@ function Home(){
                         </div>
                     </div>
                 </div>
-                <div className="preview">
+                <div className="preview" id='pdf' ref={pdfRef}>
                     <ReactMarkdown children={text} className='text'/>
                 </div>
                </div>

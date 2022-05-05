@@ -54,6 +54,20 @@
        .toolbar{
            width:100%;
            background-color: var(--header-color);
+            ul{
+                display: flex;
+                li{
+                    list-style-type: none;
+                }
+                button{
+                    border:none;
+                     background:transparent;
+                     color:var(--light-color);
+                     margin:1rem;
+                     font-size: 1.2rem;
+                     cursor:pointer;
+                }
+            }
        }
        .text{
            width: 100%;

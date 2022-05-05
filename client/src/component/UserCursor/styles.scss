@@ -1,8 +1,9 @@
 .user-cursor{
     position:absolute;
-    height:2rem;
+    height:48px;
     font-size: .8rem;
     z-index: 9999;
+    overflow: hidden;
     .name{
         background-color: var(--button-color); 
         padding:.5rem;
@@ -10,9 +11,15 @@
         border-radius: .5rem;
     }
     .cursor{
-        width: 1rem;
-        height:1rem;
+        width:100%;
         color:var(--button-color);
-        font-size: 1.5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .bar{
+            width:2px;
+            height:24px;
+            background-color:var(--button-color);
+        }
     }
 }

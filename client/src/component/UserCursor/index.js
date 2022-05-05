@@ -1,5 +1,5 @@
 import './styles.scss'
-function UserCursor({top,left,name,id}){   
+function UserCursor({top,left,name,id}){ 
     const style = {
         top: `${top}px`,
         left:`${left}px`
@@ -14,7 +14,7 @@ function UserCursor({top,left,name,id}){
                 {name}
             </div>
             <div className="cursor">
-                <span>|</span>
+                <div className='bar'></div>
             </div>
         </div>
     )

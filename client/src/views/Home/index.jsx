@@ -6,6 +6,8 @@ import './styles.scss'
 import { useView } from '../../hook/useView';
 import io from 'socket.io-client';
 import getCaretCoordinates from 'textarea-caret'
+import UserCursor from '../../component/UserCursor';
+
 function Home(){
     const params = useParams();
     const code = params.id
@@ -81,23 +83,13 @@ function Home(){
                                     const [x,y]= item.cursor_position.split(',')
                                     const left = Number(x)
                                     const top = Number(y) +15
-                                     const style = {
-                                         top: `${top}px`,
-                                         left:`${left}px`
-                                       };                                  
                                      return (
-                                         <div 
-                                         className="user-cursor"
+                                         <UserCursor
+                                         top={top}
+                                         left={left}
+                                         name={item.name}
                                          id={item._id}
-                                         style={style}
-                                         >
-                                             <div className="name">
-                                                 {item.name}
-                                             </div>
-                                             <div className="cursor">
-                                                 <span>|</span>
-                                             </div>
-                                         </div>
+                                         />
                                      )
                                   }
                                 })

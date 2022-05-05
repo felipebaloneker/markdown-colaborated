@@ -18,7 +18,7 @@ io.on('connection', socket => {
             socket_id:socket.id,
             name:data.name,
             room:data.room,
-            cursor_position:0
+            cursor_position:'0,0'
           })
           users.save()
         }
